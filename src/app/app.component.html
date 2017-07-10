@@ -7,11 +7,16 @@
 <ul>
   <li *ngFor="let ingredient of ingredients">
     {{ingredient}}
+    <ul>
+      <li *ngFor="let product of products">
+        {{product.name}} {{product.price}}
+        <button type="button" (click)="onBuy(product.price)">Buy</button>
+      </li>
+    </ul>
   </li>
 </ul>
-<ul>
-  <li *ngFor="let equivalent of equivalents">
-    {{equivalent}}
-  </li>
-</ul>
-<button type="button" (click)="onBuy()">Buy</button>
+<p *ngIf="cartIsNotEmpty">
+  Products amount: {{productAmount}}
+  <br/>
+  Total sum: {{productSum}}
+</p>

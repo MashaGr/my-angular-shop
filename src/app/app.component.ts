@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Product } from './product.model';
+import { ProductsService } from './products.service';
+
 enum CategoryType {
   cat1 = 1 ,
   cat2 = 2,
@@ -12,7 +15,7 @@ enum CategoryType {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
+  title = 'Web Store';
   name: string;
   description: string;
   price: number;
@@ -20,15 +23,30 @@ export class AppComponent implements OnInit {
   isAvailable: boolean;
   ingredients: any[];
   equivalents: any[];
+  cartIsNotEmpty: boolean;
+  productAmount: number;
+  productSum: number;
+
+  products: Array<Product>;
+
+  constructor(
+      public productsService: ProductsService
+  ) { }
 
   ngOnInit() {
     this.isAvailable = false;
-    this.ingredients = ['ingredient1', 'ingredient2'];
-    this.equivalents = ['equivalent3', 'equivalent4', 'equivalent5'];
+    this.cartIsNotEmpty = false;
+    this.productAmount = 0;
+    this.productSum = 0;
+    this.ingredients = ['category1', 'category2'];
+    this.equivalents = ['product1', 'product2', 'product3'];
+    this.products = this.productsService.getProducts();
   }
 
-  onBuy() {
-    console.log('1');
+  onBuy(value: number): void {
+    this.cartIsNotEmpty = true;
+    this.productAmount += 1;
+    this.productSum += value;
   }
 
 }
